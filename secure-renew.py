@@ -85,7 +85,7 @@ def renew_cert(security_group_id, verification_port,  domain):
     # Renew the certificate
     # -n = non-interactive
     # -d = comma delimited list of domains to renew
-    result = subprocess.run(["/usr/bin/certbot", "-n", "-d", domain, 'renew'], stdout=subprocess.PIPE)
+    result = subprocess.run(["/usr/bin/certbot", "-n", "--cert-name", domain, 'renew'], stdout=subprocess.PIPE)
     log(result.stdout)
 
     # Remove the global allow rule
