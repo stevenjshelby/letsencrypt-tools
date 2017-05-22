@@ -5,7 +5,9 @@ secure.example.com:
 [example.com]
 SecurityGroupId: sg-abcd1234
 VerificationPort: 80
+PostInstallScript: '/usr/bin/service nginx restart'
 
 [secure.example.com]
 SecurityGroupId: sg-1234abcd
 VerificationPort: 443
+PostInstallScript: '/usr/bin/service nginx restart'

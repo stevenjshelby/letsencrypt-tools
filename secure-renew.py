@@ -103,6 +103,9 @@ if __name__ == '__main__':
          domain_config = config[domain]
          security_group_id = domain_config['SecurityGroupId']
          verification_port = domain_config['VerificationPort']
+         post_install_script = ''
+         if domain_config['PostInstallScript']:
+             post_install_script = domain_config['PostInstallScript']
 
          if ready_for_renewal(domain):
-             renew_cert(security_group_id, verification_port, domain)
+             renew_cert(security_group_id, verification_port, domain, post_install_script)
