@@ -60,10 +60,10 @@ def ready_for_renewal(domain):
     margin = datetime.timedelta(days = 29)
 
     if expire_date < today + margin:
-        log("Cert expiring in less than 30 days: " + str(expire_date))
+        log("[" + domain + "] Cert expiring in less than 30 days: " + str(expire_date))
         return True
 
-    log("Cert not expiring in less than 30 days: " + str(expire_date))
+    log("[" + domain + "] Cert not expiring in less than 30 days: " + str(expire_date))
     return False
 
 
