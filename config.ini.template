@@ -1,6 +1,6 @@
 [Domains]
-example.com
-secure.example.com
+example.com:
+secure.example.com:
 
 [example.com]
 SecurityGroupId: sg-abcd1234
