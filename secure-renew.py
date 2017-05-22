@@ -68,7 +68,7 @@ def ready_for_renewal(domain):
 
 
 
-def renew_cert(security_group_id, verification_port,  domain):
+def renew_cert(security_group_id, verification_port,  domain, restart_service=None):
     """
     Renew the SSL  cert for the specified domain
     """
@@ -88,6 +88,11 @@ def renew_cert(security_group_id, verification_port,  domain):
     result = subprocess.run(["/usr/bin/certbot", "-n", "--cert-name", domain, 'renew'], stdout=subprocess.PIPE)
     log(result.stdout)
 
+    # Restart the service if specified
+    if not restart_service is None:
+        result = subprocess.run(["/usr/bin/service", restart_service, 'restart'], stdout=subprocess.PIPE)
+        log(result.stdout)
+
     # Remove the global allow rule
     remove_ingress_rule(security_group_id, '0.0.0.0/0', verification_port, 'tcp')
 
@@ -103,9 +108,9 @@ if __name__ == '__main__':
          domain_config = config[domain]
          security_group_id = domain_config['SecurityGroupId']
          verification_port = domain_config['VerificationPort']
-         post_install_script = ''
-         if domain_config['PostInstallScript']:
-             post_install_script = domain_config['PostInstallScript']
+         restart_service = None
+         if domain_config['RestartService']:
+             restart_service = domain_config['RestartService']
 
          if ready_for_renewal(domain):
-             renew_cert(security_group_id, verification_port, domain, post_install_script)
+             renew_cert(security_group_id, verification_port, domain, restart_service)
